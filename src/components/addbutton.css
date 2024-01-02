@@ -1,0 +1,14 @@
+.add-button {
+    height: 150px;
+    width: 150px;
+    border: 1px dashed black;
+    background-color: gray;
+    opacity: 50%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 20px 20px 0 0;
+    padding: 10px;
+}

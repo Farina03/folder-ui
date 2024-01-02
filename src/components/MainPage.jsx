@@ -4,29 +4,42 @@ import './mainpage.css'
 import AddButton from './AddButton'
 
 const MainPage = () => {
-    const [folderArray, setFolderArray] = useState(null)
-    const [numOfFolder, setNumOfFolder] = useState([{}])
-    function handleFolderClick() {
-        // setNumOfFolder(null)
-    }
+    // const [folderArray, setFolderArray] = useState(null)
+    const [numOfFolder, setNumOfFolder] = useState([])
+
+    function handleFolderClick(event) {
+        const {id} = event.target
+        setNumOfFolder(numOfFolder.map(item => {
+            if(item.id === id) {
+                return {
+                    ...item,
+                    clicked: !item.clicked
+                }
+            }
+            else return item
+        })
+            
+        )}
+    
     function handleButtonClick() {
-        setNumOfFolder(numOfFolder.push({
+        setNumOfFolder([...numOfFolder, {
             folder_name: "My Folder",
-            folder_num: numOfFolder.length
-        }))
+            folder_id: numOfFolder.length + 1,
+            subfolder: [],
+            clicked: false
+        }])
     }
   return (
     <div className='main-page'>
-        {numOfFolder.map((item) => {
+        {numOfFolder.length > 0 && numOfFolder.map((item) => {
             return (
-                <Folder folderName={`${item.folder_name} ${item.folder_num}`} handleCick={handleFolderClick}/>
+                <Folder id={item.folder_id}
+                        folderName={`${item.folder_name} ${item.folder_id}`}
+                        handleCick={handleFolderClick}/>
             )
         })}
-        
-        {/* <Folder folderName='My Folder 2'/>
-        <Folder folderName='My Folder 3'/>
-        <Folder folderName='My Folder 4'/> */}
         <AddButton handleClick={handleButtonClick}/>
+        {console.log(numOfFolder)}
     </div>
   )
 }

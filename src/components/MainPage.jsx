@@ -7,19 +7,19 @@ const MainPage = () => {
     // const [folderArray, setFolderArray] = useState(null)
     const [numOfFolder, setNumOfFolder] = useState([])
 
-    function handleFolderClick(event) {
-        const {id} = event.target
-        setNumOfFolder(numOfFolder.map(item => {
-            if(item.id === id) {
-                return {
-                    ...item,
-                    clicked: !item.clicked
-                }
-            }
-            else return item
-        })
-            
-        )}
+    function handleFolderClick() {
+        setNumOfFolder([])
+        // const {id} = event.target
+        // setNumOfFolder(numOfFolder.map(item => {
+        //     if(item.id === id) {
+        //         return {
+        //             ...item,
+        //             clicked: !item.clicked
+        //         }
+        //     }
+        //     else return item
+        // }))
+    }
     
     function handleButtonClick() {
         setNumOfFolder([...numOfFolder, {
@@ -31,15 +31,14 @@ const MainPage = () => {
     }
   return (
     <div className='main-page'>
-        {numOfFolder.length > 0 && numOfFolder.map((item) => {
+        {numOfFolder.map((item) => {
             return (
                 <Folder id={item.folder_id}
                         folderName={`${item.folder_name} ${item.folder_id}`}
-                        handleCick={handleFolderClick}/>
+                        handleClick={handleFolderClick}/>
             )
         })}
         <AddButton handleClick={handleButtonClick}/>
-        {console.log(numOfFolder)}
     </div>
   )
 }

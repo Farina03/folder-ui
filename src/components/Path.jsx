@@ -6,7 +6,7 @@ const Path = ({parent, folders, setParent}) => {
     let temp = parent
     if(parent !== 0) {
         while(temp !== 0) {
-            path.push(folders[temp])
+            path.push(folders[temp].title)
             temp = folders[temp].parent
         }
     }

@@ -3,6 +3,7 @@ import './mainpage.css'
 import AddButton from './AddButton'
 import Folders from './Folders'
 import './addbutton.css'
+import Path from './Path'
 
 const MainPage = () => {
     const [parent, setParent] = useState(0)  
@@ -45,6 +46,7 @@ const MainPage = () => {
                 <AddButton handleClick={handleCreate}/>
             </div>
             <div className='folder-div'>
+                <Path parent={parent} folders={folders} setParent={setParent} />
                 <Folders parent={parent} folders={folders} setParent={setParent} />
             </div>
             {console.log(folders)}

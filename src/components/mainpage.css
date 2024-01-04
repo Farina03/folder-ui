@@ -1,6 +1,25 @@
 .main-page {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.folder-div {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+.input-field {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    padding: 5px;
+    border: .5px solid gray;
+}
+.input-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

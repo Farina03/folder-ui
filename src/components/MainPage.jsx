@@ -9,10 +9,10 @@ const MainPage = () => {
     const [parent, setParent] = useState(0)  
     const [folderName, setFolderName] = useState("")       
     const [folders, setFolders] = useState({
-        id1: {title: 'Folder 1', parent: 0, child: []},
-        id2: {title: 'Folder 2', parent: 0, child: ['id3']},
-        id3: {title: 'Folder 2.1', parent: 'id2', child: ['id5']},
-        id5: {title: 'Folder 2.1.1', parent: 'id3', child: []},
+        id1: {id: "id1", title: 'Folder 1', parent: 0, child: []},
+        id2: {id: "id2", title: 'Folder 2', parent: 0, child: ['id3']},
+        id3: {id: "id3", title: 'Folder 2.1', parent: 'id2', child: ['id5']},
+        id5: {id: "id5", title: 'Folder 2.1.1', parent: 'id3', child: []},
     });
     
     function handleCreate() {
@@ -27,6 +27,7 @@ const MainPage = () => {
             parent !== 0 && fd[parent].child.push(newId)
             setFolders({...fd,
                 [newId]: {
+                    id: newId,
                     title: folderName,
                     parent: parent,
                     child: []

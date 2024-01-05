@@ -1,0 +1,20 @@
+.crumb-outer-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.crumb-outer-div > * {
+    cursor: pointer;
+    
+}
+.breadcrumb-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.crumb {
+    margin: 5px;
+    cursor: pointer;
+    color: #365486;
+}

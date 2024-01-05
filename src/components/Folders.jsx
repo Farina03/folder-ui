@@ -2,24 +2,20 @@ import React, { useState, useEffect } from "react";
 import './folder.css'
 import FolderIcon from '@mui/icons-material/Folder';
 import Path from "./Path";
-import HomeIcon from '@mui/icons-material/Home';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Alert from "./Alert";
 
-const Folders = ({parent, folders, setParent}) =>{
-    const [alerttrigger, setAlertTrigger] = useState(false)
-    function navigateHome() {
-        setParent(0)
-    }
-    function handleDelete() {
-        alert("Are you sure you want to delete?")
+const Folders = ({parent, folders, setParent, setFolders}) =>{
+    const [alertTrigger, setAlertTrigger] = useState("")
+    function handleDelete(v) {
+        setAlertTrigger(v)
+        //confirm()
     }
     return (
             <div>
-                {/* <div className="breadcrumbs-div">
-                    <div className="homeicon-div" onClick={navigateHome}>
-                        <HomeIcon />
-                    </div>
-                </div> */}
+                {console.log(folders, "initial")}
+                {alertTrigger !== "" ? 
+                <Alert setParent={setParent} alertTrigger={alertTrigger} folders={folders} 
+                        setAlertTrigger={setAlertTrigger} setFolders={setFolders}/> :
                 <div className="folder-outer-div">
                     {Object.keys(folders).map((v)=>{
                         let thisFolder = folders[v];
@@ -27,7 +23,8 @@ const Folders = ({parent, folders, setParent}) =>{
                         return (
                             <div className='folder-div'> 
                                 <div className="delete-div">
-                                    <input type="button" className="delete-button" name={v} onClick={handleDelete} />
+                                    <button className="delete-alert-btn" 
+                                            name={v} onClick={() => handleDelete(v)}>Delete</button>
                                 </div>
                                 <div className='folder' onClick={()=>{setParent(v);}}>
                                     <FolderIcon color='primary' fontSize='large'/>
@@ -36,7 +33,7 @@ const Folders = ({parent, folders, setParent}) =>{
                             </div>
                         )
                     })}
-                </div>
+                </div>}
             </div>
             
     )

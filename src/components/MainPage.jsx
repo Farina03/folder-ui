@@ -19,7 +19,6 @@ const MainPage = () => {
         if(folderName !== '') {
             function randomId() {
                 let randomId = Math.floor(Math.random() * 1000)
-                console.log(randomId)
                 return String(randomId)
             }
             let newId = 'id'+randomId()
@@ -48,9 +47,8 @@ const MainPage = () => {
             </div>
             <div className='folder-div'>
                 <Path parent={parent} folders={folders} setParent={setParent} />
-                <Folders parent={parent} folders={folders} setParent={setParent} />
+                <Folders parent={parent} folders={folders} setParent={setParent} setFolders={setFolders}/>
             </div>
-            {console.log(folders)}
         </div>
         
     )

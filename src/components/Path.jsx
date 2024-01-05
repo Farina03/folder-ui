@@ -2,7 +2,6 @@ import React from 'react'
 import './path.css'
 
 const Path = ({parent, folders, setParent}) => {
-    console.log(parent)
     const path = []
     let temp = parent
     if(parent !== 0) {
@@ -12,7 +11,7 @@ const Path = ({parent, folders, setParent}) => {
             if(temp === 0) path.push(0)
         }
     }
-    function handleNavigation(item) {
+    function handleNavigation(item, setParent) {
         setParent(item.id)
     }
   return (

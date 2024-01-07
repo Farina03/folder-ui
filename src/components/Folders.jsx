@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import './folder.css'
 import FolderIcon from '@mui/icons-material/Folder';
 
-const Folders = ({parent, folders, setParent, setFolders}) =>{
+const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolders}) =>{
     const [colorVal, setColorVal] = useState({Default:"#FFB534"})
 
-    function handleDelete(v, folders, setFolders) {
+    function handleDelete(opt, v, folders, setFolders, sorter) {
         let x = window.confirm(`Are you sure you want to delete the folder ${folders[v].title}?`)
         if(x) {
             let tempObj = {...folders}
@@ -15,33 +15,36 @@ const Folders = ({parent, folders, setParent, setFolders}) =>{
                     delete tempObj[id]
                 }
             })
-
             let deletedFolderParent = deletedInfo.parent
             if(tempObj[deletedFolderParent]) {
                 let newchildarray = []
                 newchildarray = tempObj[deletedFolderParent].child.filter(item => item !== v)
                 tempObj[deletedFolderParent].child = newchildarray
-                console.log(tempObj, "after")
+                //console.log(tempObj, "after")
             }
             delete tempObj[v]
             setFolders({...tempObj})
+            sorter(opt, tempObj)
+            //use filter to remove deleted id from sortedArray
+
+            
         }
     }
-    function handleColor(event, setFolders, v) {
+    function handleColor(event, setFolders, id) {
         const {value} = event.target
         setColorVal(prevColor => {
             return (
                 {...prevColor,
-                [v]: value}
+                [id]: value}
             )
         })
         setFolders(item => {
-            let tempObj = item[v]
+            let tempObj = item[id]
             tempObj.color = value
             return(
                 {
                     ...item,
-                    [v]: tempObj
+                    [id]: tempObj
                 }
             )
         })
@@ -51,13 +54,14 @@ const Folders = ({parent, folders, setParent, setFolders}) =>{
             <div>
                 {console.log(folders, "initial")}
                 <div className="folder-outer-div">
-                    {Object.keys(folders).map((v)=>{
-                        let thisFolder = folders[v];
+                    {sortedArray.map((v)=>{
+                        let id = v[1]
+                        let thisFolder = folders[id];
                         if(thisFolder.parent !== parent) return null;
                         return (
-                            <div className='folder-div' key={v}> 
+                            <div className='folder-div' key={id}> 
                                 <div className="color-div">
-                                    <select id={v} value={colorVal[v] || colorVal.Default} onChange={(event) => handleColor(event, setFolders, v)}>
+                                    <select id={id} value={colorVal[id] || colorVal.Default} onChange={(event) => handleColor(event, setFolders, id)}>
                                         <option value="green">Green</option>
                                         <option value="#5D3587">Purple</option>
                                         <option value="#3887BE">Blue</option>
@@ -65,11 +69,11 @@ const Folders = ({parent, folders, setParent, setFolders}) =>{
                                     </select>
                                 </div>
                                 <div className="delete-div">
-                                    <button className="delete-alert-btn" name={v} 
-                                            onClick={() => handleDelete(v, folders, setFolders)}>Delete</button>
+                                    <button className="delete-alert-btn" name={id} 
+                                            onClick={() => handleDelete(opt, id, folders, setFolders, sorter)}>Delete</button>
                                 </div>
-                                <div className='folder' onClick={()=>{setParent(v)}}>
-                                        <FolderIcon style={{color: colorVal[v] || colorVal.Default}} fontSize='large'/>
+                                <div className='folder' onClick={()=>{setParent(id)}}>
+                                        <FolderIcon style={{color: colorVal[id] || colorVal.Default}} fontSize='large'/>
                                 </div>
                                 <div className='title'> {thisFolder.title} </div>
                             </div>

@@ -18,12 +18,11 @@ const Path = ({parent, folders, setParent}) => {
         <div className='crumb-outer-div'>
             {path.reverse().map(item => {
                 return (
-                    <div >
-                        {item === 0 ? <div key={item.id} className='crumb' onClick={() => setParent(0)}>Root</div> :
+                    <div key={item.id}>
+                        {item === 0 ? <div className='crumb' onClick={() => setParent(0)}>Root</div> :
                         <div className='breadcrumb-div'>
                         <div>{`>`}</div>
-                        <div key={item.id} className='crumb' onClick={() => handleNavigation(item, setParent)}>{`${item.title}`}</div>
-
+                        <div className='crumb' onClick={() => handleNavigation(item, setParent)}>{`${item.title}`}</div>
                         </div>}
                     </div>
                 )

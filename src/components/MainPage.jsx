@@ -14,8 +14,9 @@ const MainPage = () => {
         // id3: {id: "id3", title: 'Folder 2.1', parent: 'id2', child: ['id5']},
         // id5: {id: "id5", title: 'Folder 2.1.1', parent: 'id3', child: []},
     });
-    const [currentFolders, setCurrentFolders] = useState({})
-    const [selectedOption, setSelectedOption] = useState("default")
+    //const [currentFolders, setCurrentFolders] = useState({})
+    const [selectedOption, setSelectedOption] = useState("asc")
+    const [sortedArray, setSortedArray] = useState([])
     
     function handleCreate() {
         if(folderName !== '') {
@@ -26,57 +27,54 @@ const MainPage = () => {
             let newId = 'id'+randomId()
             let fd = {...folders};
             parent !== 0 && fd[parent].child.push(newId)
-            setFolders({...fd,
-                [newId]: {
-                    id: newId,
-                    title: folderName,
-                    parent: parent,
-                    child: [],
-                    color: "Default"
-                }
-            })
+            fd[newId] = {
+                id: newId,
+                title: folderName,
+                parent: parent,
+                child: [],
+                color: "Default"
+            }
+            setFolders({...fd})
+            sorter(selectedOption, fd)
             setFolderName(""); 
         }
     }
     function handleFolderName(event) {
         setFolderName(event.target.value)
     }
-    function sortedObject(foldersTitleArray) {
-        let tempObj = {}
-        foldersTitleArray.map(item => {
-            tempObj = {...tempObj,
-                        [item[1]]: folders[item[1]]}
-            // setCurrentFolders({
-            //     ...currentFolders,
-            //     [item[1]]: folders[item[1]]
-            // })
-            // return {...tempObj,
-            //         [item[1]]: folders[item[1]]}
-        })
-        console.log(tempObj, "temp")
-        setCurrentFolders({...tempObj})
-        console.log(currentFolders, "sorted temp obj")
-    }
-    function sorter(opt, folders, parent) {
+    // function sortedObject(foldersTitleArray) {
+    //     let tempObj = {}
+    //     foldersTitleArray.map(item => {
+    //         tempObj = {...tempObj,
+    //                     [item[1]]: folders[item[1]]}
+    //         // setCurrentFolders({
+    //         //     ...currentFolders,
+    //         //     [item[1]]: folders[item[1]]
+    //         // })
+    //         // return {...tempObj,
+    //         //         [item[1]]: folders[item[1]]}
+    //     })
+    //     console.log(tempObj, "temp")
+    //     setCurrentFolders({...tempObj})
+    //     console.log(currentFolders, "sorted temp obj")
+    // }
+    function handleSort(opt, folders, parent) {
         setSelectedOption(opt)
-        let foldersTitleArray = []
-        // foldersTitleArray = Object.keys(folders).map(item => {
-        //     if(folders[item].parent === parent) return [folders[item].title, folders[item].id]
-        // })
-        Object.keys(folders).map(item => {
-            if(folders[item].parent === parent)
-                foldersTitleArray = [...foldersTitleArray, [folders[item].title, folders[item].id]]
+        sorter(opt, folders)
+    }
+    function sorter(opt, folders) {
+        //setSelectedOption(opt)
+        let foldersTitleArray = Object.keys(folders).map(item => {
+            return [folders[item].title, folders[item].id]           
         })
-        //if(selectedOption === "default") console.log(foldersTitleArray)
+        //let defaultSortedArray = [...foldersTitleArray]
+        //console.log(foldersTitleArray, "before")
+        //if(selectedOption === "default") setSortedArray(defaultSortedArray)
         opt === "asc" ? foldersTitleArray.sort() :
         foldersTitleArray.sort().reverse()
-        sortedObject(foldersTitleArray)
-        //.filter(item => folders[item].parent === parent)
-        // let foldersTitleArray = []
-        // foldersIdArray.forEach(item => {
-        //     foldersTitleArray.push(folders[item].title)
-        // })
-        console.log(foldersTitleArray, opt)
+        setSortedArray(foldersTitleArray)
+        //console.log(foldersTitleArray, "sorted")
+        //console.log(opt)
     }
     
     return (
@@ -91,8 +89,8 @@ const MainPage = () => {
                 <AddButton handleClick={handleCreate}/>
             </div>
             <div className='sort-options-div'>
-                <select value={selectedOption} onChange={(event) => sorter(event.target.value, folders, parent)}>
-                    <option value="default">Default</option>
+                <select value={selectedOption} onChange={(event) => handleSort(event.target.value, folders, parent)}>
+                    {/* <option value="default">Default</option> */}
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
                 </select>
@@ -100,8 +98,8 @@ const MainPage = () => {
             </div>
             <div className='folder-div'>
                 <Path parent={parent} folders={folders} setParent={setParent} />
-                <Folders parent={parent} folders={folders} setParent={setParent} 
-                        setFolders={setFolders} sorterfunction={sorter}/>
+                <Folders opt={selectedOption} sortedArray={sortedArray} sorter={sorter} parent={parent} folders={folders} setParent={setParent} 
+                        setFolders={setFolders} />
             </div>
         </div>
     )

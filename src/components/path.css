@@ -2,7 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    margin-top: 15px;
+    margin-right: auto;
+    padding-left: 20px;
 }
 .crumb-outer-div > * {
     cursor: pointer;
@@ -17,7 +19,4 @@
     margin: 5px;
     cursor: pointer;
     color: #365486;
-}
-.alertbox-div :onclick {
-    visibility: hidden;
 }

@@ -11,9 +11,11 @@ const Path = ({parent, folders, setParent}) => {
             if(temp === 0) path.push(0)
         }
     }
+
     function handleNavigation(item, setParent) {
         setParent(item.id)
     }
+    
   return (
         <div className='crumb-outer-div'>
             {path.reverse().map(item => {

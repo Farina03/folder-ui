@@ -9,13 +9,9 @@ const MainPage = () => {
     const [parent, setParent] = useState(0)  
     const [folderName, setFolderName] = useState("")       
     const [folders, setFolders] = useState({
-        // id1: {id: "id1", title: 'Folder 1', parent: 0, child: []},
-        // id2: {id: "id2", title: 'Folder 2', parent: 0, child: ['id3']},
-        // id3: {id: "id3", title: 'Folder 2.1', parent: 'id2', child: ['id5']},
-        // id5: {id: "id5", title: 'Folder 2.1.1', parent: 'id3', child: []},
+        // id1: {id: "id1", title: 'Folder 1', parent: 0, child: []}
     });
-    //const [currentFolders, setCurrentFolders] = useState({})
-    const [selectedOption, setSelectedOption] = useState("asc")
+    const [selectedOption, setSelectedOption] = useState("")
     const [sortedArray, setSortedArray] = useState([])
     
     function handleCreate() {
@@ -39,46 +35,32 @@ const MainPage = () => {
             setFolderName(""); 
         }
     }
+
     function handleFolderName(event) {
         setFolderName(event.target.value)
     }
-    // function sortedObject(foldersTitleArray) {
-    //     let tempObj = {}
-    //     foldersTitleArray.map(item => {
-    //         tempObj = {...tempObj,
-    //                     [item[1]]: folders[item[1]]}
-    //         // setCurrentFolders({
-    //         //     ...currentFolders,
-    //         //     [item[1]]: folders[item[1]]
-    //         // })
-    //         // return {...tempObj,
-    //         //         [item[1]]: folders[item[1]]}
-    //     })
-    //     console.log(tempObj, "temp")
-    //     setCurrentFolders({...tempObj})
-    //     console.log(currentFolders, "sorted temp obj")
-    // }
-    function handleSort(opt, folders, parent) {
-        setSelectedOption(opt)
-        sorter(opt, folders)
+
+    function handleSort(event, folders) {
+        const {value} = event.target
+        setSelectedOption(value)
+        sorter(value, folders)
     }
+
     function sorter(opt, folders) {
-        //setSelectedOption(opt)
         let foldersTitleArray = Object.keys(folders).map(item => {
             return [folders[item].title, folders[item].id]           
         })
-        //let defaultSortedArray = [...foldersTitleArray]
-        //console.log(foldersTitleArray, "before")
-        //if(selectedOption === "default") setSortedArray(defaultSortedArray)
-        opt === "asc" ? foldersTitleArray.sort() :
-        foldersTitleArray.sort().reverse()
+        if(opt === "default") setSortedArray(foldersTitleArray)
+        else if(opt === "asc") foldersTitleArray.sort()
+        else foldersTitleArray.sort().reverse()
         setSortedArray(foldersTitleArray)
-        //console.log(foldersTitleArray, "sorted")
-        //console.log(opt)
     }
     
     return (
         <div className='main-page'>
+            <div className='navbar-div'>
+                <div className='navbar-title'>FOLD'em</div>
+            </div>
             <div className='input-div'>
                 <input className='input-field' type='text' value={folderName}
                     onChange={(event) => handleFolderName(event)}
@@ -89,18 +71,21 @@ const MainPage = () => {
                 <AddButton handleClick={handleCreate}/>
             </div>
             <div className='sort-options-div'>
-                <select value={selectedOption} onChange={(event) => handleSort(event.target.value, folders, parent)}>
-                    {/* <option value="default">Default</option> */}
+                {/* <label className="sort-label" for="sortoption">Sort By</label> */}
+                <select className="sort-options" id="sortopt" value={selectedOption} 
+                        onChange={(event) => handleSort(event, folders)}>
+                    <option value="">Sort By --</option>
+                    <option value="default">Default</option>
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
-                </select>
-
+                </select> 
             </div>
-            <div className='folder-div'>
-                <Path parent={parent} folders={folders} setParent={setParent} />
-                <Folders opt={selectedOption} sortedArray={sortedArray} sorter={sorter} parent={parent} folders={folders} setParent={setParent} 
-                        setFolders={setFolders} />
-            </div>
+            <Path parent={parent} folders={folders} setParent={setParent} />
+            
+            <Folders opt={selectedOption} sortedArray={sortedArray} sorter={sorter} parent={parent} 
+                    folders={folders} setParent={setParent} setFolders={setFolders} />
+                    {/* folder had an outer div that i deleted */}
+            
         </div>
     )
 }

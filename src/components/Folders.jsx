@@ -4,6 +4,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 
 const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolders}) =>{
     const [colorVal, setColorVal] = useState({Default:"#FFB534"})
+    //const [colorVal, setColorVal] = useState("")
 
     function handleDelete(opt, v, folders, setFolders, sorter) {
         let x = window.confirm(`Are you sure you want to delete the folder ${folders[v].title}?`)
@@ -20,16 +21,13 @@ const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolde
                 let newchildarray = []
                 newchildarray = tempObj[deletedFolderParent].child.filter(item => item !== v)
                 tempObj[deletedFolderParent].child = newchildarray
-                //console.log(tempObj, "after")
             }
             delete tempObj[v]
             setFolders({...tempObj})
             sorter(opt, tempObj)
-            //use filter to remove deleted id from sortedArray
-
-            
         }
     }
+
     function handleColor(event, setFolders, id) {
         const {value} = event.target
         setColorVal(prevColor => {
@@ -51,37 +49,36 @@ const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolde
     }
 
     return (
-            <div>
-                {console.log(folders, "initial")}
-                <div className="folder-outer-div">
-                    {sortedArray.map((v)=>{
-                        let id = v[1]
-                        let thisFolder = folders[id];
-                        if(thisFolder.parent !== parent) return null;
-                        return (
-                            <div className='folder-div' key={id}> 
-                                <div className="color-div">
-                                    <select id={id} value={colorVal[id] || colorVal.Default} onChange={(event) => handleColor(event, setFolders, id)}>
-                                        <option value="green">Green</option>
-                                        <option value="#5D3587">Purple</option>
-                                        <option value="#3887BE">Blue</option>
-                                        <option value="#FFB534">Default</option>
-                                    </select>
-                                </div>
-                                <div className="delete-div">
-                                    <button className="delete-alert-btn" name={id} 
-                                            onClick={() => handleDelete(opt, id, folders, setFolders, sorter)}>Delete</button>
-                                </div>
-                                <div className='folder' onClick={()=>{setParent(id)}}>
-                                        <FolderIcon style={{color: colorVal[id] || colorVal.Default}} fontSize='large'/>
-                                </div>
-                                <div className='title'> {thisFolder.title} </div>
+            <div className="folder-outer-div">
+                {sortedArray.map((v)=>{
+                    let id = v[1]
+                    let thisFolder = folders[id];
+                    if(thisFolder.parent !== parent) return null;
+                    return (
+                        <div className='folder-div' key={id}> 
+                            <div className="color-div">
+                                <select className="colors" id={id} value={colorVal[id] || colorVal.Default} 
+                                       onChange={(event) => handleColor(event, setFolders, id)}>
+                                    <option value="green">Green</option>
+                                    <option value="#5D3587">Purple</option>
+                                    <option value="#3887BE">Blue</option>
+                                    <option value="#FFB534">Default</option>
+                                    <option value="">Choose Color --</option>
+                                </select>
                             </div>
-                        )
-                    })}
-                </div>
-            </div>  
-    )
+                            {/* <div className="delete-div">                                     */}
+                                <button className="delete-alert-btn" name={id} 
+                                        onClick={() => handleDelete(opt, id, folders, setFolders, sorter)}>Delete</button>
+                            {/* </div> */}
+                            <div className='folder' onClick={()=>{setParent(id)}}>
+                                <FolderIcon style={{fontSize: "60px", color: colorVal[id] || colorVal.Default}} fontSize='large'/>
+                            </div>
+                            <div className='title'> {thisFolder.title} </div>
+                        </div>
+                    )
+                })}
+            </div>
+            )
 }
 
 export default Folders;

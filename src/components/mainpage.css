@@ -1,16 +1,30 @@
 .main-page {
     display: flex;
     flex-direction: column;
+    width: 800px;
     align-items: center;
-    justify-content: center;
+    border: .5px solid gray;
+    /* background-color: aqua; */
 }
-.folder-div {
+.navbar-div {
+    height: 100px;
+    width: 100%;
+    border-bottom: .5px;
+    border-color: gray;
+    border: .5px solid gray;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background-color: black;
+    opacity: 80%;
 }
-
+.navbar-title {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+}
 .input-field {
     margin-top: 20px;
     height: 30px;
@@ -22,4 +36,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px;
+}
+.sort-options-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    /* background-color: gray; */
+    margin-left: 180px;
+    width: 100px;
+}
+.sort-options {
+    height: 25px;
+    width: 100px;
+    border: .5px solid gray;
+    margin: 5px;
+    color: gray;
+}
+.sort-label {
+    font-size: 12px;
+    margin-top: 10px;;
+    margin-bottom: 2px;
 }

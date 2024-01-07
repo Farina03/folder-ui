@@ -1,7 +1,9 @@
 .folder-outer-div {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .folder-div {
@@ -9,24 +11,37 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 15px 15px 0 0;
-    opacity: 80%;
+    margin: 20px 20px;
+    opacity: 65%;
     position: relative;
+    /* border: .5px solid gray;
+    padding: 5px; */
 }
-
+.folder-div:hover {
+    transform: scale(110%);
+    opacity: 90%;
+}
+.color-div {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.colors {
+    height: 20px;
+    width: 80px;
+    border: .5px solid gray;
+    margin: 5px;
+    color: gray;
+}
 .folder {
     border: 1px solid gray;
     border-radius: 5px;
-    height: 70px;
-    width: 70px;
+    height: 80px;
+    width: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.folder-icon {
-    font-size: x-large;
 }
 
 .title {
@@ -34,24 +49,32 @@
     font-size: 14px;
 }
 
-.homeicon-div {
-    height: 30px;
-    width: 30px;
-    border: .5px solid gray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.delete-div {
+/* .delete-div {
     position: absolute;
     height: 5px;
     width: 5px;
     margin-top: 10px;
-}
-
-.breadcrumbs-div {
+} */
+.delete-alert-btn {
+    position: absolute;
+    height: 30px;
+    width: 45px;
+    margin-top: 45px;
+    margin-left: 98px;
+    /* margin: 50px 50px 0 0; */
     display: flex;
     align-items: center;
     justify-content: center;
+    border: .5px solid black;
+    background-color: #B6BBC4;
+    border-radius: 2px;
+    font-size: 12px;
+    opacity: 50%;
+    font-weight: 400;
+}
+.delete-alert-btn:hover{
+    background-color: #B6BBC4;
+    border-color: black;
+    transform: scale(110%);
+    opacity: 80%;
 }

@@ -17,7 +17,8 @@ const Alert = ({setParent, alertTrigger, folders, setAlertTrigger, setFolders}) 
         tempObj[deletedFolderParent].child = newchildarray
         // console.log(folders)
         console.log(tempObj, "after")
-        folders = {...tempObj}
+        setFolders({...tempObj})
+        //folders = {...tempObj}
         console.log(folders, "copied-folder")
         setParent(deletedFolderParent)
         // setAlertTrigger("")
@@ -25,9 +26,9 @@ const Alert = ({setParent, alertTrigger, folders, setAlertTrigger, setFolders}) 
         //     ...tempObj
         // }))
     }
-    else {
-        setAlertTrigger("")
-    }
+    // else {
+    //     setAlertTrigger("")
+    // }
   }
   function handleCancel() {
     setAlertTrigger("")

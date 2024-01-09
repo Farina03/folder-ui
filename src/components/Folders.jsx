@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import './folder.css'
 import FolderIcon from '@mui/icons-material/Folder';
 
+
+
 const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolders}) =>{
     const [colorVal, setColorVal] = useState(() => {
         return JSON.parse(localStorage.getItem("colors")) || {Default:"#FFB534"}
     })
+
     useEffect(() => {
         return localStorage.setItem("colors", JSON.stringify(colorVal))
-    })
+    }, [colorVal])
 
     function handleDelete(opt, v, folders, setFolders, sorter) {
         let x = window.confirm(`Are you sure you want to delete the folder ${folders[v].title}?`)
@@ -27,10 +30,7 @@ const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolde
                 tempObj[deletedFolderParent].child = newchildarray
             }
             delete tempObj[v]
-            //localStorage.setItem('folders', JSON.stringify(tempObj))
             setFolders({...tempObj})
-            sorter(opt, tempObj)
-            //sorter(opt, folders)
         }
     }
 
@@ -60,7 +60,7 @@ const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolde
                 {sortedArray.map((v)=>{
                     let id = v[1]
                     let thisFolder = folders[id];
-                    if(thisFolder.parent !== parent) return null;
+                    if(thisFolder?.parent !== parent) return null;
                     return (
                         <div className='folder-div' key={id}> 
                             <div className="color-div">
@@ -89,5 +89,3 @@ const Folders = ({opt, sortedArray, sorter, parent, folders, setParent, setFolde
 }
 
 export default Folders;
-
-//colorVal[id]

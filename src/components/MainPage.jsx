@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './mainpage.css'
-import AddButton from './AddButton'
+import AddButton from './addbutton/AddButton'
 import Folders from './Folders'
-import './addbutton.css'
+import './addbutton/addbutton.css'
 import Path from './Path'
+import { randomId } from '../utils'
 
 const MainPage = () => {
     const [parent, setParent] = useState(0)  
@@ -20,14 +21,10 @@ const MainPage = () => {
         localStorage.setItem('folders', JSON.stringify(folders))
         sorter(selectedOption || "", folders)
         
-    }, [folders])
+    }, [folders, selectedOption])
     
     function handleCreate() {
         if(folderName !== '') {
-            function randomId() {
-                let randomId = Math.floor(Math.random() * 1000)
-                return String(randomId)
-            }
             let newId = 'id'+randomId()
             let fd = {...folders};
             parent !== 0 && fd[parent].child.push(newId)
@@ -39,7 +36,6 @@ const MainPage = () => {
                 color: "Default"
             }
             setFolders({...fd})
-            sorter(selectedOption, fd)
             setFolderName(""); 
         }
     }

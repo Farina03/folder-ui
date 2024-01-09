@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './mainpage.css'
 import AddButton from './AddButton'
 import Folders from './Folders'
@@ -7,12 +7,20 @@ import Path from './Path'
 
 const MainPage = () => {
     const [parent, setParent] = useState(0)  
-    const [folderName, setFolderName] = useState("")       
-    const [folders, setFolders] = useState({
-        // id1: {id: "id1", title: 'Folder 1', parent: 0, child: []}
-    });
-    const [selectedOption, setSelectedOption] = useState("")
+    const [folderName, setFolderName] = useState("")     
+    const [folders, setFolders] = useState(() => {     //{id1: {id: "id1", title: 'Folder 1', parent: 0, child: []}}
+        return JSON.parse(localStorage.getItem("folders")) || {}
+    })
+        
+    const [selectedOption, setSelectedOption] = useState( () => {
+        return JSON.parse(localStorage.getItem("order")) || ""})
     const [sortedArray, setSortedArray] = useState([])
+
+    useEffect(() => {
+        localStorage.setItem('folders', JSON.stringify(folders))
+        sorter(selectedOption || "", folders)
+        
+    }, [folders])
     
     function handleCreate() {
         if(folderName !== '') {
@@ -43,16 +51,19 @@ const MainPage = () => {
     function handleSort(event, folders) {
         const {value} = event.target
         setSelectedOption(value)
+        localStorage.setItem('order', JSON.stringify(value))
         sorter(value, folders)
     }
 
     function sorter(opt, folders) {
         let foldersTitleArray = Object.keys(folders).map(item => {
-            return [folders[item].title, folders[item].id]           
+
+            return [folders[item].title.toUpperCase(), folders[item].id]           
         })
         if(opt === "default") setSortedArray(foldersTitleArray)
         else if(opt === "asc") foldersTitleArray.sort()
         else foldersTitleArray.sort().reverse()
+        console.log(foldersTitleArray)
         setSortedArray(foldersTitleArray)
     }
     
@@ -81,10 +92,8 @@ const MainPage = () => {
                 </select> 
             </div>
             <Path parent={parent} folders={folders} setParent={setParent} />
-            
             <Folders opt={selectedOption} sortedArray={sortedArray} sorter={sorter} parent={parent} 
                     folders={folders} setParent={setParent} setFolders={setFolders} />
-                    {/* folder had an outer div that i deleted */}
             
         </div>
     )

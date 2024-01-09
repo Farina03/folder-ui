@@ -19,8 +19,8 @@
     opacity: 80%;
 }
 .navbar-title {
-    margin-bottom: 5px;
-    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
     color: white;
     font-size: 32px;
     font-weight: 600;
@@ -46,6 +46,7 @@
     /* background-color: gray; */
     margin-left: 180px;
     width: 100px;
+    
 }
 .sort-options {
     height: 25px;
@@ -53,6 +54,7 @@
     border: .5px solid gray;
     margin: 5px;
     color: gray;
+    cursor: pointer;
 }
 .sort-label {
     font-size: 12px;
